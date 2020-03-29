@@ -16,7 +16,7 @@ import string
 
 
 ```python
-# Lets experiment affine transformation with a square
+# Lets experiment the affine transformation with a square
 
 # 2D square matrix
 square = np.array([
@@ -38,8 +38,7 @@ h_square = homogeneous_coordinates(square)
 
 
 ```python
-# Lets see how our square looks like
-
+# Plotting 2D matrix
 def plot_m2d(matrix, title, t_matrix=None):
     i = 0
     xs = []
@@ -76,6 +75,7 @@ def plot_m2d(matrix, title, t_matrix=None):
     plt.grid()
     plt.show()
 
+# Lets see how our square looks like
 plot_m2d(h_square, 'Square 3x3')
 h_square
 ```
@@ -99,6 +99,8 @@ h_square
 # Functions for affine transformation
 
 # SCALING
+#   sx = horizontal / x-coordinates scaling
+#   sy = vertical / y-coordinates scaling
 def t2d_scaling(sx, sy):
     m_scaling = np.array([
         [sx, 0, 0],
@@ -108,6 +110,8 @@ def t2d_scaling(sx, sy):
     return m_scaling
 
 # TRANSLATION
+#   tx = horizontal / x-coordinates translation
+#   ty = vertical / y-coordinates translation
 def t2d_translation(tx, ty):
     m_translation = np.array([
         [1, 0, tx],
@@ -117,6 +121,7 @@ def t2d_translation(tx, ty):
     return m_translation
 
 # ROTATION
+#   degree = how much rotation in degree(angle)
 def t2d_rotation(degree):
     m_rotation = np.array([
         [np.cos(np.radians(degree)), -np.sin(np.radians(degree)), 0],
@@ -126,6 +131,8 @@ def t2d_rotation(degree):
     return m_rotation
 
 # TRANSFORMATION
+#   matrix = 2D (homogeneous coordinates) matrix to transform
+#   transformation = TSR (Translation | Scaling | Rotation)
 def transform_2d(matrix, transformation):
     return (transformation @ matrix.transpose()).transpose()
 
@@ -139,6 +146,8 @@ def h_projective(tx, ty, sx, sy, degree, p1, p2):
     return H
 
 # PROJECTIVE
+#   matrix = 2D (homogeneous coordinates) matrix to transform
+#   H = 3x3 matrix
 def projective_2d(matrix, H):
     res = H @ matrix.transpose()
     res = res / res[2]
